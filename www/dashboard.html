@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard - Tournament Maker</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+</head>
+
+<body>
+
+    <div id="splash-screen">
+
+        <div class="splash-content">
+
+            <div class="splash-logo">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <h1>
+                Tournament Maker
+            </h1>
+
+            <p>
+                Tournament Management
+            </p>
+
+            <div class="splash-loader">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <header>
+
+        <h1>Tournament Maker</h1>
+
+    </header>
+
+    <nav>
+
+        <button class="nav-item" data-i18n="tournament" data-panel="tournament-panel">
+
+            <span>Tournament</span>
+
+        </button>
+
+
+        <button class="nav-item" data-i18n="team" data-panel="team-panel">
+
+            <span>Team</span>
+
+        </button>
+
+
+        <button class="nav-item" data-i18n="location" data-panel="location-panel">
+
+            <span>Location</span>
+
+        </button>
+
+
+        <button class="nav-item" data-i18n="settings" data-panel="settings-panel">
+
+            <span>Settings</span>
+
+        </button>
+
+    </nav>
+
+    <main>
+        <section id="tournament-panel" class="panel">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-tournament" data-i18n="searchTournament" placeholder="Search Tournament">
+
+                <div class="custom-select" id="sort-tournament-custom">
+
+                    <button type="button" class="custom-select-trigger">
+
+                        <span data-i18n="newest" class="custom-select-value">
+                            Newest
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </button>
+
+
+                    <div class="custom-select-options">
+
+                        <button type="button" class="custom-select-option active" data-value="newest"
+                            data-i18n="newest">
+
+                            Newest
+
+                        </button>
+
+                        <button type="button" class="custom-select-option" data-value="oldest" data-i18n="oldest">
+
+                            Oldest
+
+                        </button>
+
+                        <button type="button" class="custom-select-option" data-value="az" data-i18n="aToZ">
+
+                            A-Z
+
+                        </button>
+
+                        <button type="button" class="custom-select-option" data-value="za" data-i18n="zToA">
+
+                            Z-A
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <select id="sort-tournament" hidden>
+
+                    <option data-i18n="newest" class="option-sort" value="newest">Newest</option>
+
+                    <option data-i18n="oldest" class="option-sort" value="oldest">Oldest</option>
+
+                    <option data-i18n="aToZ" class="option-sort" value="az">A-Z</option>
+
+                    <option data-i18n="zToA" class="option-sort" value="za">Z-A</option>
+
+                </select>
+            </div>
+            <section class="welcome">
+                <h2 data-i18n="welcomeTitle">Welcome to The Tournament Maker</h2>
+            </section>
+            <section class="action">
+                <button data-i18n="createTournament" type="button" class="primary-btn" id="add-tournament-btn">Create
+                    Tournament</button>
+            </section>
+            <section class="tournament-list">
+                <h2 data-i18n="tournamentList">Tournament list</h2>
+                <div class="empty" hidden>
+                    <i class="fa-solid fa-trophy"></i>
+                    <h3 data-i18n="noTournamentYet">no tournament yet</h3>
+                    <p data-i18n="createFirstTournament">Create your first tournament to get started</p>
+                </div>
+                <div id="tournament-container">
+
+                </div>
+            </section>
+        </section>
+
+        <section id="team-panel" class="panel" hidden>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-team" data-i18n="searchTeam" placeholder="Search Team">
+            </div>
+            <section class="action">
+                <button data-i18n="createTeam" type="button" class="primary-btn" id="add-team-btn">Create Team</button>
+            </section>
+            <section class="team-list">
+                <h2 data-i18n="teamList">Team List</h2>
+                <div id="team-container">
+                    <p data-i18n="noTeamYet" class="empty">
+                        no team yet
+                    </p>
+
+                </div>
+            </section>
+        </section>
+
+        <section id="location-panel" class="panel" hidden>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-location" data-i18n="searchLocation" placeholder="Search Location">
+            </div>
+            <section class="action">
+                <button type="button" class="primary-btn" data-i18n="createLocation" id="add-location-btn">Create
+                    Location</button>
+            </section>
+            <section class="location-list">
+                <h2 data-i18n="locationList">Location List</h2>
+                <div id="location-container">
+                    <p data-i18n="noLocationYet" class="empty">
+                        no location yet
+                    </p>
+
+                </div>
+            </section>
+        </section>
+
+        <section id="settings-panel" class="panel" hidden>
+
+            <div class="settings-grid">
+
+                <div class="settings-card">
+
+                    <h2 data-i18n="general">
+                        General
+                    </h2>
+
+                    <div class="general-item">
+
+                        <div>
+
+                            <strong data-i18n="language">
+                                Language
+                            </strong>
+
+                            <p data-i18n="languageDescription">
+                                Application language
+                            </p>
+
+                        </div>
+
+                        <div class="custom-select" id="language-select">
+
+                            <button type="button" class="custom-select-trigger">
+
+                                <span class="custom-select-value">
+                                    Bahasa Indonesia
+                                </span>
+
+                                <i class="fa-solid fa-chevron-down"></i>
+
+                            </button>
+
+
+                            <div class="custom-select-options">
+
+                                <button type="button" class="custom-select-option" data-value="en">
+
+                                    English
+
+                                </button>
+
+                                <button type="button" class="custom-select-option" data-value="id">
+
+                                    Bahasa Indonesia
+
+                                </button>
+
+                                <button type="button" class="custom-select-option" data-value="fr">
+
+                                    Français
+
+                                </button>
+
+                                <button type="button" class="custom-select-option" data-value="zh">
+
+                                    简体中文
+
+                                </button>
+
+                                <button type="button" class="custom-select-option" data-value="ar">
+
+                                    العربية
+
+                                </button>
+
+                                <button type="button" class="custom-select-option" data-value="ru">
+
+                                    Русский
+
+                                </button>
+
+                                <button type="button" class="custom-select-option" data-value="es">
+
+                                    Español
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="settings-card">
+
+                    <h2 data-i18n="data">Data</h2>
+
+                    <p data-i18n="dataDescription" class="data-description">
+                        Keep your tournament data safe.
+                    </p>
+
+                    <button data-i18n="exportData" class="data-setting" id="export-data-btn">
+                        Export Data
+                    </button>
+
+                    <button data-i18n="importData" class="data-setting" id="import-data-btn">
+                        Import Data
+                    </button>
+
+                    <input type="file" id="import-data-input" accept=".json" hidden>
+
+                    <hr>
+
+                    <h3 data-i18n="dangerZone" class="danger-title">
+                        Danger Zone
+                    </h3>
+
+                    <button data-i18n="resetAllData" id="reset-data-btn" class="danger-btn">
+                        Reset All Data
+                    </button>
+
+                </div>
+
+                <div class="settings-card">
+
+                    <h2 data-i18n="about">About</h2>
+
+                    <p data-i18n="appName" class="about-app-name">
+                        Tournament Maker
+                    </p>
+
+                    <p data-i18n="appDescription" class="about-description">
+                        Offline Tournament Management App
+                    </p>
+
+                    <hr>
+
+                    <div class="about-item">
+                        <span data-i18n="version">Version</span>
+                        <strong id="app-version"></strong>
+                    </div>
+
+                    <div class="about-item">
+                        <span data-i18n="developer">Developer</span>
+                        <strong>Achmad Ilus Asyiqi</strong>
+                    </div>
+
+                    <div class="about-item">
+                        <span data-i18n="madeWith">Made with</span>
+                        <strong>HTML • CSS • JavaScript</strong>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 data-i18n="createTournamentModal" id="modal-title">Create Tournament</h2>
+                <button type="button" aria-label="Close" id="close-modal-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <form id="create-tournament-form">
+                <div class="input-group">
+                    <label data-i18n="tournamentName" for="tournament-name">
+                        Tournament Name
+                    </label>
+                    <input data-i18n="enterTournamentName" type="text" id="tournament-name"
+                        placeholder="Enter Tournament Name..." required>
+                </div>
+
+                <h3 class="system-title" data-i18n="tournamentSystem">Tournament System</h3>
+                <div class="system-list">
+
+                    <div class="system-counter" data-system="League">
+                        <span data-i18n="league">League</span>
+
+                        <div class="counter">
+                            <button type="button" class="minus-btn">-</button>
+                            <span class="count">0</span>
+                            <button type="button" class="plus-btn">+</button>
+                        </div>
+                    </div>
+
+                    <div class="system-counter" data-system="Group">
+                        <span data-i18n="group">Group</span>
+
+                        <div class="counter">
+                            <button type="button" class="minus-btn">-</button>
+                            <span class="count">0</span>
+                            <button type="button" class="plus-btn">+</button>
+                        </div>
+                    </div>
+
+                    <div class="system-counter" data-system="Knock-out">
+                        <span data-i18n="knockOut">Knock-out</span>
+
+                        <div class="counter">
+                            <button type="button" class="minus-btn">-</button>
+                            <span class="count">0</span>
+                            <button type="button" class="plus-btn">+</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-actions">
+                    <button data-i18n="create" type="submit" id="create-tournament-btn">
+                        Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 data-i18n="deleteTournament">Delete Tournament</h2>
+            </header>
+            <p data-i18n="areYouSureDelete" class="delete-text">
+                Are you sure you want to delete
+            </p>
+
+            <h3 id="delete-tournament-name"></h3>
+
+            <div class="modal-actions">
+                <button data-i18n="cancel" type="button" id="cancel-delete-btn">
+                    Cancel
+                </button>
+
+                <button data-i18n="delete" type="button" id="confirm-delete-btn">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="team-modal" class="modal">
+        <div class="modal-content">
+
+            <header class="modal-header">
+                <h2 id="team-modal-title" data-i18n="createTeamModal">Create Team</h2>
+                <button type="button" id="close-team-modal-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+
+            <form id="create-team-form">
+                <div class="input-group">
+                    <label for="team-name" data-i18n="teamName">Team Name</label>
+                    <input data-i18n="enterTeamName" type="text" id="team-name" placeholder="Enter Team Name..."
+                        required>
+                </div>
+
+                <div class="input-group">
+                    <label data-i18n="teamLogo">Team Logo</label>
+                    <div id="choose-logo">
+                        <i class="fa-solid fa-plus"></i>
+                        <p data-i18n="chooseLogo">Choose Logo</p>
+                    </div>
+                </div>
+
+                <input type="file" id="gallery-input" accept="image/*" hidden>
+
+                <div class="modal-actions">
+                    <button data-i18n="create" type="submit" id="create-team-btn">
+                        Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="logo-modal" class="modal">
+        <div class="modal-content">
+
+            <header class="modal-header">
+                <h2 data-i18n="chooseTeamLogo">Choose Team Logo</h2>
+                <button type="button" id="close-logo-modal-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+
+            <div class="logo-option">
+                <button type="button" id="gallery-btn">
+                    <i class="fa-solid fa-image"></i>
+                    <span data-i18n="uploadFromGallery">Upload From Gallery</span>
+                </button>
+
+                <button type="button" id="country-btn">
+                    <i class="fa-solid fa-flag"></i>
+                    <span data-i18n="countryFlags">Country Flags</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="country-modal" class="modal">
+        <div class="modal-content">
+
+            <header class="modal-header">
+                <h2 data-i18n="chooseCountryFlag">Choose Country Flag</h2>
+                <button type="button" id="close-country-modal-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+
+            <div class="input-group">
+                <input data-i18n="searchCountry" type="text" id="search-country" placeholder="Search Country...">
+            </div>
+
+            <div id="country-container">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-team-modal" class="modal">
+        <div class="modal-content">
+
+            <header class="modal-header">
+                <h2 data-i18n="deleteTeam">Delete Team</h2>
+            </header>
+
+            <p data-i18n="areYouSureDelete" class="delete-text">
+                Are you sure you want to delete
+            </p>
+
+            <h3 id="delete-team-name"></h3>
+
+            <div class="modal-actions">
+
+                <button data-i18n="cancel" type="button" id="cancel-delete-team-btn">
+                    Cancel
+                </button>
+
+                <button data-i18n="delete" type="button" id="confirm-delete-team-btn">
+                    Delete
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">
+        <i id="toast-icon"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <div id="location-modal" class="modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+                <h2 data-i18n="createLocationModal" id="location-modal-title">
+                    Create Location
+                </h2>
+
+                <button type="button" id="close-location-modal-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <form id="create-location-form">
+
+                <div class="input-group">
+
+                    <label data-i18n="locationName">
+                        Location Name
+                    </label>
+                    <input data-i18n="enterLocationName" type="text" id="location-name"
+                        placeholder="Enter Location Name..." required>
+
+                </div>
+
+                <div class="modal-actions">
+
+                    <button data-i18n="create" type="submit" id="create-location-btn">
+                        Create
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="delete-location-modal" class="modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+                <h2 data-i18n="deleteLocation">Delete Location</h2>
+            </header>
+
+            <p data-i18n="areYouSureDelete" class="delete-text">
+                Are you sure you want to delete
+            </p>
+
+            <h3 id="delete-location-name"></h3>
+
+            <div class="modal-actions">
+
+                <button data-i18n="cancel" type="button" id="cancel-delete-location-btn">
+                    Cancel
+                </button>
+
+                <button data-i18n="delete" type="button" id="confirm-delete-location-btn">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="reset-data-modal" class="modal">
+
+        <div class="modal-content">
+
+            <h2 data-i18n="resetAllDataModal">Reset All Data</h2>
+
+            <p data-i18n="areYouSureReset">
+                Are you sure you want to delete all data?
+            </p>
+
+            <p data-i18n="warningCannotUndo" class="warning-text">
+                This action cannot be undone.
+            </p>
+
+            <div class="modal-actions">
+
+                <button data-i18n="cancel" id="cancel-reset-btn">
+                    Cancel
+                </button>
+
+                <button data-i18n="reset" id="confirm-reset-btn" class="danger-btn">
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="open-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 id="open-title"></h2>
+
+                <button type="button" aria-label="Close" id="close-open-modal-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <div id="open-system-container">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="language-loading-modal" class="modal">
+
+        <div class="loading-modal-content">
+
+            <div class="loading-spinner"></div>
+
+            <p data-i18n="changingLanguage">
+                Changing language...
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+
+</html>

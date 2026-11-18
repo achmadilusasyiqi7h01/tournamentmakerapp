@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>league - Tournament Maker</title>
+    <link rel="stylesheet" href="system.css">
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+</head>
+
+<body>
+    <button data-i18n="back" id="back-btn">
+        ← Back
+    </button>
+
+    <h2 id="system-name"></h2>
+
+    <nav>
+
+        <button data-i18n="system" data-panel="system-panel" class="nav-items nav-items-active">
+            System
+        </button>
+
+        <button data-i18n="standing" data-panel="standing-panel" class="nav-items">
+            Standing
+        </button>
+
+        <button data-i18n="matches" data-panel="matches-panel" class="nav-items">
+            Matches
+        </button>
+
+        <button data-i18n="statisticsTeam" data-panel="statistics-panel" class="nav-items">
+            Team Statistics
+        </button>
+
+    </nav>
+
+    <main>
+
+        <section id="system-panel" class="panels">
+
+            <div class="setting-card">
+
+                <h3 data-i18n="general" class="general-gr">General</h3>
+
+                <label data-i18n="league" class="general-gr">
+                    Name System
+                </label>
+
+                <input type="text" id="system-input-name">
+
+                <label data-i18n="selectedTeams" class="general-gr">
+                    Selected Teams
+                </label>
+
+                <p id="team-counter">
+
+                </p>
+
+                <button data-i18n="chooseTeam" id="choose-team-btn">
+
+                    Choose Team
+
+                </button>
+
+                <div class="meeting-type">
+
+                    <button data-i18n="homeaway" id="home-away-btn">
+
+                        Home Away
+
+                    </button>
+
+                    <button data-i18n="singlemeeting" id="single-meeting-btn">
+
+                        Single Meeting
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="setting-card">
+
+                <div class="qualification" data-type="qualified">
+
+                    <label data-i18n="qualified">
+
+                        Qualified
+
+                    </label>
+
+                    <button class="minus-btn">-</button>
+
+                    <span id="qualified-count">0</span>
+
+                    <button class="plus-btn">+</button>
+
+                </div>
+
+                <div class="qualification" data-type="qualifiedSecondary">
+
+                    <label data-i18n="qualifiedSecondary">
+
+                        Qualified Secondary
+
+                    </label>
+
+                    <button class="minus-btn">-</button>
+
+                    <span id="qualified-secondary-count">0</span>
+
+                    <button class="plus-btn">+</button>
+
+                </div>
+
+                <div class="qualification" data-type="eliminated">
+
+                    <label data-i18n="eliminated">
+
+                        Eliminated
+
+                    </label>
+
+                    <button class="minus-btn">-</button>
+
+                    <span id="eliminated-count">0</span>
+
+                    <button class="plus-btn">+</button>
+
+                </div>
+
+                <div class="qualification" data-type="eliminatedSecondary">
+
+                    <label data-i18n="eliminatedSecondary">
+
+                        Eliminated Secondary
+
+                    </label>
+
+                    <button class="minus-btn">-</button>
+
+                    <span id="eliminated-secondary-count">0</span>
+
+                    <button class="plus-btn">+</button>
+
+                </div>
+
+            </div>
+
+            <button data-i18n="save" id="save-system-btn">
+
+                Save
+
+            </button>
+
+            </div>
+
+        </section>
+
+        <section id="standing-panel" class="panels">
+
+            <div class="setting-card">
+
+                <h3 data-i18n="leagueGenerator" class="general-gr">
+
+                    League Generator
+
+                </h3>
+
+                <button data-i18n="createStandings" id="random-btn">
+
+                    Create Standing
+
+                </button>
+
+                <div id="standing-setup">
+
+                </div>
+
+                <div id="standing-result">
+
+                </div>
+
+                <button data-i18n="deleteStandings" class="delete" id="delete-standing-btn" style="display:none;">
+
+                    Delete Standing
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <section id="matches-panel" class="panels">
+
+            <div class="setting-card">
+
+                <div class="matches-toolbar">
+
+                    <input data-i18n="searchTeam" type="text" id="match-search"
+                        placeholder="Search team or round or group">
+
+                    <select id="match-sort" hidden>
+
+                        <option value="round">
+                            Default
+                        </option>
+
+                        <option value="date">
+                            Sort by Date
+                        </option>
+
+                    </select>
+
+
+                    <div class="custom-select match-sort-custom">
+
+                        <button type="button" class="custom-select-trigger">
+
+                            <span data-i18n="sortRound" class="custom-select-value">
+
+                                Default
+
+                            </span>
+
+                            <i class="fa-solid fa-chevron-down"></i>
+
+                        </button>
+
+
+                        <div class="custom-select-options">
+
+                            <button type="button" class="custom-select-option active" data-value="round"
+                                data-i18n="sortRound">
+
+                                Default
+
+                            </button>
+
+                            <button type="button" class="custom-select-option" data-value="date" data-i18n="sortDate">
+
+                                Sort by Date
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="matches-container">
+
+                </div>
+
+                <div id="matches-pagination" class="matches-pagination">
+
+                    <button type="button" id="previous-matches" class="matches-page-btn">
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <span data-i18n="previous"> Previous </span>
+                    </button>
+
+                    <span id="matches-page-info">
+                        Matches 1–40
+                    </span>
+
+                    <button type="button" id="next-matches" class="matches-page-btn">
+                        <span data-i18n="next"> Next </span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="statistics-panel" class="panels">
+
+            <div class="setting-card">
+
+                <div id="team-statistics-container">
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div class="modal" id="choose-team-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 data-i18n="chooseTeam">
+
+                    Choose Team
+
+                </h2>
+
+                <button type="button" aria-label="Close" id="close-choose-team-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <div class="input-group">
+
+                <input data-i18n="searchTeam" type="text" id="search-team-system" placeholder="Search team...">
+
+            </div>
+
+            <div id="team-list-container">
+
+            </div>
+
+            <button data-i18n="selectAllteam" type="button" id="select-all-teams-btn">
+
+                Select All Teams
+
+            </button>
+
+            <button data-i18n="addTeams" id="add-system-btn">
+
+                Add Teams
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="toast" class="toast">
+        <i id="toast-icon"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <div class="modal" id="random-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2>Random Draw</h2>
+
+            </header>
+
+            <div id="random-preview">
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="cancel" id="cancel-random-btn">
+
+                    Cancel
+
+                </button>
+
+                <button id="draw-random-btn">
+
+                    Draw
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="delete-standing-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 data-i18n="deleteStandings">
+
+                    Delete Standing
+
+                </h2>
+
+            </header>
+
+            <p data-i18n="areYousure">
+
+                Are you sure you want to delete this standing?
+
+            </p>
+
+            <p data-i18n="thisDeleteAll">
+
+                This will also delete all:
+
+            </p>
+
+            <ul>
+
+                <li data-i18n="matches">Matches</li>
+
+                <li data-i18n="statistics">Statistics</li>
+
+            </ul>
+
+            <div class="modal-buttons">
+
+                <button data-i18n="cancel" class="cancel" id="cancel-delete-standing-btn">
+
+                    Cancel
+
+                </button>
+
+                <button data-i18n="delete" class="delete" id="confirm-delete-standing-btn">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="calendar-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 data-i18n="matchSchedule">Match Schedule</h2>
+
+                <button type="button" aria-label="Close" id="cancel-calendar-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <input type="date" id="match-date">
+
+            <input type="time" id="match-time">
+
+            <div class="custom-schedule">
+
+                <button type="button" id="open-date-picker" class="custom-schedule-btn">
+
+                    <i class="fa-solid fa-calendar"></i>
+
+                    <span data-i18n="selectDate" id="selected-date">
+                        Select Date
+                    </span>
+
+                </button>
+
+
+                <button type="button" id="open-time-picker" class="custom-schedule-btn">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    <span data-i18n="selectTime" id="selected-time">
+                        Select Time
+                    </span>
+
+                </button>
+
+            </div>
+
+            <div class="modal-buttons">
+
+                <button data-i18n="delete" class="delete" id="delete-calendar-btn">
+
+                    Delete
+
+                </button>
+
+                <button data-i18n="save" id="save-calendar-btn">
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="location-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 data-i18n="selectLocation">Select Location</h2>
+
+                <button type="button" aria-label="Close" id="close-location-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <input data-i18n="searchLocation" type="text" id="search-location" placeholder="Search location...">
+
+            <div id="location-list">
+
+            </div>
+
+            <button data-i18n="delete" class="delete" id="delete-location-btn">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- CUSTOM DATE PICKER -->
+
+    <div id="date-picker-modal" class="date-picker-overlay">
+
+        <div class="date-picker">
+
+            <div class="date-picker-header">
+
+                <button type="button" id="date-picker-prev" class="date-nav-btn">
+
+                    <i class="fa-solid fa-chevron-left"></i>
+
+                </button>
+
+                <div class="date-picker-month">
+
+                    <span id="date-picker-month">
+                        August
+                    </span>
+
+                    <span id="date-picker-year">
+                        2026
+                    </span>
+
+                </div>
+
+                <button type="button" id="date-picker-next" class="date-nav-btn">
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="date-picker-weekdays">
+
+                <span data-i18n="sun">Su</span>
+                <span data-i18n="mon">Mo</span>
+                <span data-i18n="tue">Tu</span>
+                <span data-i18n="wed">We</span>
+                <span data-i18n="thu">Th</span>
+                <span data-i18n="fri">Fr</span>
+                <span data-i18n="sat">Sa</span>
+
+            </div>
+
+
+            <div id="date-picker-days" class="date-picker-days">
+
+            </div>
+
+
+            <div class="date-picker-footer">
+
+                <button data-i18n="today" type="button" id="date-picker-today" class="date-picker-action">
+
+                    Today
+
+                </button>
+
+                <button data-i18n="clear" type="button" id="date-picker-clear" class="date-picker-action">
+
+                    Clear
+
+                </button>
+
+                <button data-i18n="cancel" type="button" id="date-picker-close" class="date-picker-action">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="time-picker-modal" class="time-picker-overlay">
+
+        <div class="time-picker">
+
+            <div class="time-picker-header">
+
+                <span data-i18n="selectTime">
+                    Select Time
+                </span>
+
+                <button type="button" id="time-picker-close">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="time-picker-display">
+
+                <span id="time-hour">17</span>
+
+                <span>:</span>
+
+                <span id="time-minute">30</span>
+
+            </div>
+
+
+            <div class="time-picker-controls">
+
+                <div class="time-column">
+
+                    <button type="button" id="hour-up">
+
+                        <i class="fa-solid fa-chevron-up"></i>
+
+                    </button>
+
+                    <span id="hour-value">
+                        17
+                    </span>
+
+                    <button type="button" id="hour-down">
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </button>
+
+                </div>
+
+
+                <span class="time-separator">
+                    :
+                </span>
+
+
+                <div class="time-column">
+
+                    <button type="button" id="minute-up">
+
+                        <i class="fa-solid fa-chevron-up"></i>
+
+                    </button>
+
+                    <span id="minute-value">
+                        30
+                    </span>
+
+                    <button type="button" id="minute-down">
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="time-picker-footer">
+
+                <button type="button" id="time-picker-clear">
+
+                    Clear
+
+                </button>
+
+                <button type="button" id="time-picker-save">
+
+                    Select
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="score-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 data-i18n="setScore">Set Score</h2>
+
+                <button type="button" aria-label="Close" id="cancel-score-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <div class="score-input">
+
+                <label id="home-team-name"></label>
+
+                <input type="number" id="home-score-input" min="0" value="0">
+
+            </div>
+
+            <div class="score-input">
+
+                <label id="away-team-name"></label>
+
+                <input type="number" id="away-score-input" min="0" value="0">
+
+            </div>
+
+            <div class="modal-buttons">
+
+                <button data-i18n="deleteScore" class="delete" id="delete-score-btn">
+
+                    Delete Score
+
+                </button>
+
+                <button data-i18n="save" id="save-score-btn">
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="manual-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 data-i18n="selectTeam">Select Team</h2>
+
+                <button id="close-manual-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <input id="manual-search" placeholder="Search Team">
+
+            <div id="manual-team-container">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="statistics-modal">
+
+        <div class="modal-content">
+
+            <header class="modal-header">
+
+                <h2 data-i18n="matchStatistics">Match Statistics</h2>
+
+                <button id="close-statistics-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </header>
+
+            <div id="statistics-content"></div>
+
+        </div>
+
+    </div>
+
+    <div id="champion-modal" class="modal">
+
+        <div id="confetti-container"></div>
+
+        <div class="modal-content champion-modal-content">
+
+            <div id="champion-content"></div>
+
+            <button data-i18n="close" type="button" aria-label="Close" id="close-champion-btn">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="league.js"></script>
+
+</body>
+
+</html>

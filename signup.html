@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Tournament Maker</title>
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>Tournament Maker</h1>
+            <h2>Sign Up</h2>
+            <p class="subtitle">Already a member? <a href="login.html">Log in</a></p>
+            <form>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" id="signup-button">Sign Up</button>
+            </form>
+            <div class="devider">
+                <span>or continue with</span>
+            </div>
+            <div id="social-icons">
+                <a href="login.html" class="em"><i class="fa-solid fa-envelope"></i></a>
+                <a href="login.html" class="google"><i class="fa-brands fa-google"></i></a>
+            </div>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+</body>
+
+</html>
